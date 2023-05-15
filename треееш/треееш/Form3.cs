@@ -17,8 +17,10 @@ namespace треееш
     {
         int n = 0; // количество объектов коллекции 
 
-        static public User user = new User(); // объект класса
-        static public List<User> myUs = new List<User>(); // коллекция объектов класса - пользователей
+        static public User user = new User(); 
+        static public List<User> myUs = new List<User>(); 
+
+        
 
         public Form3()
         {
@@ -41,12 +43,7 @@ namespace треееш
 
     
 
-    private void button2_Click(object sender, EventArgs e)
-        {
-            Form4 form4 = new Form4();
-            form4.Show(); // отобразить форму
-        }
-
+   
         private void label4_Click(object sender, EventArgs e)
         {
 
@@ -97,29 +94,30 @@ namespace треееш
             }
         }
 
+        
         [Serializable] // сериализация
         public class User
         { // пользовательский класс
             string s_login; // логин
             string s_password; // пароль
-            bool b_role; // роль
+            string b_role; // роль
             string s_name; // имя
             string s_fam; // фамилия 
-            bool b_sex; // пол
+            string b_sex; // пол
             string s_country; // страна
             string s_birthdate; // дата рождения
             string s_datereg; // дата регистрации
             public User()
             { // конструктор по умолчанию
-                s_login = ""; s_password = ""; b_role = false; s_name = ""; s_fam = "";
-                b_sex = false; s_country = "Россия"; s_birthdate = "00.00.0000"; s_datereg = "00.00.0000";
+                s_login = ""; s_password = ""; b_role = ""; s_name = ""; s_fam = "";
+                b_sex = ""; s_country = "Россия"; s_birthdate = "00.00.0000"; s_datereg = "00.00.0000";
             }
             public User(User x)
             { // конструктор с параметрами
                 s_login = x.S_L; s_password = x.S_P; b_role = x.B_R; s_name = x.S_N; s_fam = x.S_F;
                 b_sex = x.B_S; s_country = x.S_C; s_birthdate = x.S_B; s_datereg = x.S_D;
             }
-            public bool B_R
+            public string B_R
             { //объявление свойства для чтения и записи поля s_name 
                 get { return b_role; } // аксессор чтения поля 
                 set { b_role = value; } // аксессор записи в поле
@@ -128,10 +126,11 @@ namespace треееш
             public string S_F { get { return s_fam; } set { s_fam = value; } }
             public string S_L { get { return s_login; } set { s_login = value; } }
             public string S_P { get { return s_password; } set { s_password = value; } }
-            public bool B_S { get { return b_sex; } set { b_sex = value; } }
+            public string B_S { get { return b_sex; } set { b_sex = value; } }
             public string S_C { get { return s_country; } set { s_country = value; } }
             public string S_B { get { return s_birthdate; } set { s_birthdate = value; } }
             public string S_D { get { return s_datereg; } set { s_datereg = value; } }
+        
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
