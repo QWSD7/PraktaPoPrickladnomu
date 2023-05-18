@@ -134,7 +134,7 @@ namespace треееш
 
             Form1 ifrm = new Form1();
             this.Hide();
-            ifrm.ShowDialog();
+            ifrm.Show();
 
 
 
@@ -148,7 +148,7 @@ namespace треееш
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
-       }
+        }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {

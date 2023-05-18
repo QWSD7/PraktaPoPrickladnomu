@@ -83,7 +83,9 @@ namespace треееш
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            Form5 form5 = new Form5();
+            this.Close();
+            form5.Show();
         }
 
         private void Form4_Load(object sender, EventArgs e)

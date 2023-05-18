@@ -28,26 +28,18 @@ namespace треееш
             InitializeComponent();
 
 
-
-           
-           
             int n = 0; // количество объектов коллекции 
             foreach (User uss in myUs)
             { // вывод коллекции пользователей, загружаемой из файла в Form3
                 listBox1.Items.Add(uss.B_R.ToString() + "\t" + uss.S_N + "\t" + uss.S_F + "\t" + uss.S_L + "\t" + uss.S_P + "\t" +
                uss.B_S.ToString() + "\t" + uss.S_C + "\t" + uss.S_B + "\t" + uss.S_D);
                 n++;
+               
             }
         }
 
 
     
-
-   
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -140,11 +132,7 @@ namespace треееш
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            /*
-            Form3 ifrm = new Form3();
-            this.Hide();
-            ifrm.ShowDialog(); // форма авторизации
-            */
+            
         }
     }
  }

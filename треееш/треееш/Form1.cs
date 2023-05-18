@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static треееш.Form3;
+using System.Security.Cryptography.X509Certificates;
 
 namespace треееш
 {
@@ -19,7 +20,9 @@ namespace треееш
     {
        
         int k, k1, k2;
+        Form5 ifrm5 = new Form5();
 
+        public static int Ind;
 
         public Form1()
         {
@@ -42,15 +45,25 @@ namespace треееш
         {
             int a = 0;
             Form2 ifrm = new Form2();
-            ifrm.ShowDialog();
+            ifrm.Show();
             if (Form2.aa == 0) this.Close();
-
         }
-      
+        
+        static int CountCharacters(string input)
+        {
+            int count = 0;
+            foreach (char c in input)
+            {
+                count++;
+            }
+            return count;
+        }
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            string mail = textBox1.Text;
+            Ind = Form3.myUs.FindIndex(a => a.S_L == mail);
             string z;
             string z1 = "Администратор";
 
@@ -94,31 +107,41 @@ namespace треееш
                 { 
                     k++; z1 = uss.B_R;
 
+                    //ifrm5.Email = textBox1.Text;
+                    //ifrm5.Pass = textBox2.Text;
+
+                    
                     foreach (User uss1 in Form3.myUs) 
                     {
                         if (uss1.S_L == textBox1.Text & uss1.S_P == textBox2.Text)
                         {
-                            Form5 ifrm = new Form5();
-                            //this.Hide();
-                            //ifrm.ShowDialog();
+                            
 
 
-                            //здесть для темеровой отображение данных
+                            ifrm5.label9.Text = uss.S_L;
 
+                            int count = CountCharacters(uss.S_P);
 
+                            string zvezda = "";
+                            for (int i = 0; i < count; i++)
+                            {
+                                zvezda += "*";
+                            }
+                            ifrm5.label10.Text = zvezda;
+                            ifrm5.TextPass = uss.S_P;
+                            
+                            ifrm5.ZTextPass = zvezda;
 
+                            ifrm5.label11.Text = uss.S_N;
+                            ifrm5.label12.Text = uss.S_F;
+                            ifrm5.label13.Text = uss.B_S;
+                            ifrm5.label14.Text = uss.S_C;
+                            ifrm5.label15.Text = uss.S_B;
+                            ifrm5.label16.Text = uss.S_D;
+                            
                         }
-                        
-                        /*
-                        listBox1.Items.Add(uss.B_R.ToString() + "\t" + uss.S_N + "\t" + uss.S_F + "\t" + uss.S_L + "\t" + uss.S_P + "\t" +
-                       uss.B_S.ToString() + "\t" + uss.S_C + "\t" + uss.S_B + "\t" + uss.S_D);
-                        n++;*/
-
-
                     }
-
-
-
+                    
                 } 
             }
             if (k == 0)
@@ -152,27 +175,16 @@ namespace треееш
             {
                 Form3 ifrm = new Form3();
                 this.Hide();
-                ifrm.ShowDialog();
+                ifrm.Show();
 
             }
             else if (comboBox1.Text == comboBox1.Items[1].ToString())
             {
-                Form5 ifrm = new Form5();
+                
                 this.Hide();
-                ifrm.ShowDialog();
+                ifrm5.Show();
 
             }
-
-
-
-
-            /*
-            Form3 ifrm = new Form3();
-            this.Hide();
-            ifrm.ShowDialog();
-            */
-
-
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -195,12 +207,10 @@ namespace треееш
         private void Form1_Load(object sender, EventArgs e)
         {
             textBox2.Focus(); 
-
-
         }
 
 
-    private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
+        private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
             {
