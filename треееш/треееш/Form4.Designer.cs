@@ -134,7 +134,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 14);
+            this.label2.Location = new System.Drawing.Point(18, 14);
             this.label2.Margin = new System.Windows.Forms.Padding(5);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(218, 21);
@@ -158,8 +158,12 @@
             // 
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
-            "Женский ♀ ",
-            "Мужской ♂️"});
+            "Россия",
+            "США",
+            "Италия",
+            "Франция",
+            "Испания",
+            "Германия"});
             this.comboBox2.Location = new System.Drawing.Point(99, 240);
             this.comboBox2.Margin = new System.Windows.Forms.Padding(5);
             this.comboBox2.Name = "comboBox2";
@@ -183,6 +187,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(318, 29);
             this.textBox1.TabIndex = 31;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // label3
@@ -250,7 +255,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(125, 37);
             this.button2.TabIndex = 39;
-            this.button2.Text = "Отмена";
+            this.button2.Text = "Назад";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 

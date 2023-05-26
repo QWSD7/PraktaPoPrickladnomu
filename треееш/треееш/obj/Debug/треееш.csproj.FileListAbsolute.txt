@@ -54,3 +54,6 @@ C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\трее�
 C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\bin\Debug\треееш.exe
 C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\bin\Debug\треееш.pdb
 C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form5.resources
+C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form6.resources
+C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form7.resources
+C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form8.resources

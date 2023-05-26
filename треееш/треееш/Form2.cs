@@ -13,13 +13,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static треееш.Form3;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using System.Security.Cryptography;
 
 namespace треееш
 {
     public partial class Form2 : Form
     {
         public static int aa;
-        
+
+        string es = "", strEmail = "", rezstrE = "";
+        string ps = "", strPass = "", rezstrP = "";
 
         public Form2()
         {
@@ -55,8 +58,20 @@ namespace треееш
             {
                 if (Regex.IsMatch(textBox1.Text, pattern, RegexOptions.IgnoreCase))
                 {
-                    MessageBox.Show("Email подтвержден");
-                    Form3.user.S_L = textBox1.Text;
+                    //шифрование Email
+
+                    if (textBox1.Text != "")
+                    { // текст для шифрования
+
+                        strEmail = textBox1.Text; // это строка которую следует зашифровать
+                    }
+                    else { MessageBox.Show("Введите данные для шифрования"); textBox1.Focus(); return; }
+                    es = CreatePasswordE(8);
+                    rezstrE = EncryptE(strEmail, es); // шифрование
+                    Form3.user.S_L = rezstrE;
+
+
+                    //Form3.user.S_L = textBox1.Text;
                 }
                 else { MessageBox.Show("Некорректный email"); return; }
             }
@@ -96,15 +111,36 @@ namespace треееш
                     }
                 }
 
-                if ((textBox3.Text != "") && (textBox2.Text == textBox3.Text)) Form3.user.S_P = textBox2.Text; // пароль
+                if ((textBox3.Text != "") && (textBox2.Text == textBox3.Text))
+                {
+                    //Шифрование пароля
+
+                    
+                    if (textBox2.Text != "")
+                    { // текст для шифрования
+
+                        strPass = textBox2.Text; // это строка которую следует зашифровать
+                    }
+                    else { MessageBox.Show("Введите данные для шифрования"); textBox2.Focus(); return; }
+                    ps = CreatePasswordP(8);
+                    rezstrP = EncryptP(strPass, ps); // шифрование
+                    Form3.user.S_P = rezstrP;
+                     
+
+
+                    //Form3.user.S_P = textBox2.Text; // пароль
+                } 
                 else { MessageBox.Show("Повторите пароль"); textBox3.Focus(); return; }
 
             }
             else { MessageBox.Show("Введите пароль"); textBox2.Focus(); return; }
+
             if (textBox4.Text != "") Form3.user.S_N = textBox4.Text; // имя
             else { MessageBox.Show("Введите имя"); textBox4.Focus(); return; }
+
             if (textBox5.Text != "") Form3.user.S_F = textBox5.Text; // фамилия
             else { MessageBox.Show("Введите фамилию"); textBox5.Focus(); return; }
+
             if (comboBox1.Text == comboBox1.Items[0].ToString()) Form3.user.B_S = comboBox1.Text; // пол
             else if (comboBox1.Text == comboBox1.Items[1].ToString()) Form3.user.B_S = comboBox1.Text; // пол
             else { MessageBox.Show("Выберите пол"); return; }
@@ -139,6 +175,88 @@ namespace треееш
 
 
         }
+
+
+
+        public static string EncryptE(string str, string keyCrypt)
+        {
+            return Convert.ToBase64String(EncryptE(Encoding.UTF8.GetBytes(str), keyCrypt));
+        }
+
+        private static byte[] EncryptE(byte[] data, string key)
+        {
+            using (SymmetricAlgorithm sa = Rijndael.Create())
+            {
+                sa.Key = new PasswordDeriveBytes(key, null).GetBytes(16);
+                sa.IV = new byte[16]; // Здесь используется нулевой IV, но в реальном приложении следует использовать случайно сгенерированный IV
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, sa.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(data, 0, data.Length);
+                        cs.FlushFinalBlock();
+                    }
+                    return ms.ToArray();
+                }
+            }
+        }
+        
+        public static string CreatePasswordE(int length)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890*!=?&/";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < length--)
+            {
+                res.Append(valid[rnd.Next(valid.Length)]);
+            }
+
+            Form3.user.S_EK = res.ToString();
+
+            return res.ToString();
+        }
+
+
+        public static string EncryptP(string str, string keyCrypt)
+        {
+            return Convert.ToBase64String(EncryptP(Encoding.UTF8.GetBytes(str), keyCrypt));
+        }
+
+        private static byte[] EncryptP(byte[] data, string key)
+        {
+            using (SymmetricAlgorithm sa = Rijndael.Create())
+            {
+                sa.Key = new PasswordDeriveBytes(key, null).GetBytes(16);
+                sa.IV = new byte[16]; // Здесь используется нулевой IV, но в реальном приложении следует использовать случайно сгенерированный IV
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, sa.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(data, 0, data.Length);
+                        cs.FlushFinalBlock();
+                    }
+                    return ms.ToArray();
+                }
+            }
+        }
+       
+
+
+        public static string CreatePasswordP(int length)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890*!=?&/";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < length--)
+            {
+                res.Append(valid[rnd.Next(valid.Length)]);
+            }
+
+            Form3.user.S_PK = res.ToString();
+
+            return res.ToString();
+        }
+
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
@@ -216,6 +334,13 @@ namespace треееш
 
 
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            this.Hide();
+            form1.Show();
         }
     }
 }

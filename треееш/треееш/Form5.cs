@@ -22,21 +22,21 @@ namespace треееш
 
         public string TextPass;
         public string ZTextPass;
+        public string NameUser;
 
 
         public Form5()
         {
             InitializeComponent();
 
-
-
+            
             foreach (User uss in Form3.myUs)
             {
                 if (Form1.Ind == n)
                 {
-                    label9.Text = uss.S_L;
+                    label9.Text = Form1.decryptedEmail = Form1.DecryptE(uss.S_L, uss.S_EK);
 
-                    int count = CountCharacters(uss.S_P);
+                    int count = CountCharacters(Form1.decryptedPassword = Form1.DecryptP(uss.S_P, uss.S_PK));
 
                     string zvezda = "";
                     for (int i = 0; i < count; i++)
@@ -44,11 +44,12 @@ namespace треееш
                         zvezda += "*";
                     }
                     label10.Text = zvezda;
-                    TextPass = uss.S_P;
+                    TextPass = Form1.decryptedPassword = Form1.DecryptP(uss.S_P, uss.S_PK);
 
                     ZTextPass = zvezda;
 
                     label11.Text = uss.S_N;
+                    NameUser = uss.S_N;
                     label12.Text = uss.S_F;
                     label13.Text = uss.B_S;
                     label14.Text = uss.S_C;
@@ -59,6 +60,27 @@ namespace треееш
                 n++;
             }
 
+            DateTime currentTime = DateTime.Now;
+            string greeting = "";
+
+            if (currentTime.Hour < 6)
+            {
+                greeting = "Доброй ночи, " + NameUser;
+            }
+            else if (currentTime.Hour < 12)
+            {
+                greeting = "Доброе утро, " + NameUser;
+            }
+            else if (currentTime.Hour < 18)
+            {
+                greeting = "Добрый день, " + NameUser;
+            }
+            else
+            {
+                greeting = "Добрый вечер, " + NameUser;
+            }
+
+            label17.Text = greeting;
 
         }
 
@@ -70,25 +92,54 @@ namespace треееш
             form4.textBox2.Text = label11.Text;
             form4.textBox3.Text = label12.Text;
 
-            if (label13.Text == "Мужской ♂")
+            if (label13.Text == "Мужской ♂️")
             {
-                form4.comboBox1.SelectedIndex = 1;
+                form4.comboBox1.Text = "Мужской ♂";
+            }
+            else if (label13.Text == "Женский ♀ ")
+            {
+                form4.comboBox1.Text = "Женский ♀ ";
             }
 
-            //Женский ♀ 
-            //Мужской ♂️
+            
+            form4.dateTimePicker1.Text = label15.Text;
 
+            if (label14.Text == "Россия")
+            {
+                form4.comboBox2.Text = "Pоссия";
+            }
+            else if (label14.Text == "США")
+            {
+                form4.comboBox2.Text = "США";
+            }
+            else if (label14.Text == "Италия")
+            {
+                form4.comboBox2.Text = "Италия";
+            }
+            else if (label14.Text == "Франция")
+            {
+                form4.comboBox2.Text = "Франция";
+            }
+            else if (label14.Text == "Испания")
+            {
+                form4.comboBox2.Text = "Испания";
+            }
+            else if (label14.Text == "Германия")
+            {
+                form4.comboBox2.Text = "Германия";
+            }
 
-
-
+            
             this.Hide();
-           form4.Show(); // отобразить форму
+           form4.Show(); 
            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Form1 form1 = new Form1();
+            this.Hide();
+            form1.Show(); 
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -121,50 +172,9 @@ namespace треееш
             return count;
         }
 
-        //public string Email = "";
-       // public string Pass = "";
-
 
         private void Form5_Load(object sender, EventArgs e)
         {
-
-
-
-            
-
-
-
-
-                /*
-
-                texts[0] = label9.Text;
-
-
-                if (label10.Text == TextPass)
-                {
-                    ZTextPass = label10.Text;
-                    button3.Text = "Показать пароль";
-                    texts[1] = ZTextPass;
-                }
-                else
-                {
-                    TextPass = label10.Text;
-                    button3.Text = "Спрятать пароль";
-                    texts[1] = TextPass;
-                }
-
-                texts[2] = label11.Text;
-                texts[3] = label12.Text;
-                texts[4] = label13.Text;
-                texts[5] = label14.Text;
-                texts[6] = label15.Text;
-                texts[7] = label16.Text;
-                */
-
         }
     }
 }
-
-
-
-//foreach (User uss in Form3.myUs)
