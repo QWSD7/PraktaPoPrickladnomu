@@ -517,6 +517,13 @@ namespace треееш
             form8.Show();
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Form7 form7 = new Form7();
+            this.Hide();
+            form7.Show();
+        }
+
         private static byte[] EncryptP(byte[] data, string key)
         {
             using (SymmetricAlgorithm sa = Rijndael.Create())

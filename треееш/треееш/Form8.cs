@@ -16,7 +16,7 @@ namespace треееш
 {
     public partial class Form8 : Form
     {
-        List<Provider> providerCollection = new List<Provider>();
+        public static List<Provider> providerCollection = new List<Provider>();
 
         public Form8()
         {
@@ -265,6 +265,9 @@ namespace треееш
 
         private void button8_Click(object sender, EventArgs e)
         {
+            dataGridView1.Columns.Clear(); // Очищаем таблицу
+
+
             dataGridView1.Columns.Add("P_NP", "Номер_поставщика");
             dataGridView1.Columns.Add("P_NO", "Название_организации");
             dataGridView1.Columns.Add("P_Co", "Страна");
@@ -278,10 +281,10 @@ namespace треееш
             dataGridView1.Columns[1].Width = 200;
             dataGridView1.Columns[2].Width = 200;
             dataGridView1.Columns[3].Width = 200;
-            dataGridView1.Columns[4].Width = 200;
-            dataGridView1.Columns[5].Width = 200;
-            dataGridView1.Columns[6].Width = 200;
-            dataGridView1.Columns[7].Width = 200;
+            dataGridView1.Columns[4].Width = 190;
+            dataGridView1.Columns[5].Width = 160;
+            dataGridView1.Columns[6].Width = 160;
+            dataGridView1.Columns[7].Width = 260;
 
             dataGridView1.Rows.Clear(); // Очищаем строки таблицы
 
@@ -309,6 +312,8 @@ namespace треееш
         {
             dataGridView1.DataSource = null; // Очищаем источник данных
             dataGridView1.Rows.Clear(); // Очищаем строки таблицы
+
+
             int i = 0;
             foreach (Provider prov in providerCollection)
             {
@@ -325,7 +330,7 @@ namespace треееш
             }
 
             dataGridView1.CurrentCell = null;
-            comboBox5.SelectedItem = -1;
+            comboBox5.SelectedIndex = -1;
 
            
         }
@@ -375,7 +380,7 @@ namespace треееш
 }
 
 [Serializable]
-class Provider
+public class Provider
 {
     private int providerCode;
     private string organizationName;

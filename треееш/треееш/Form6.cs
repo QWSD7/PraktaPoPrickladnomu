@@ -19,7 +19,7 @@ namespace треееш
     public partial class Form6 : Form
     {
         
-        List<Tovar> tovarCollection = new List<Tovar>();
+        public static List<Tovar> tovarCollection = new List<Tovar>();
 
         public static string selectedFile;
         public static Image selectedImage;
@@ -417,7 +417,7 @@ namespace треееш
 
     [Serializable] // сериализация
     // Класс Tovar для хранения информации о товаре
-    class Tovar
+    public class Tovar
     {
         private int article;
         private string name;
