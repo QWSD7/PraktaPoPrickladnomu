@@ -76,3 +76,4 @@ C:\Users\Anastasia\Desktop\rabota\PraktaPoPrickladnomu\треееш\треееш
 C:\Users\Anastasia\Desktop\rabota\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.exe
 C:\Users\Anastasia\Desktop\rabota\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.pdb
 C:\Users\Anastasia\Desktop\rabota\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form9.resources
+C:\Users\Anastasia\Desktop\rabota\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form10.resources

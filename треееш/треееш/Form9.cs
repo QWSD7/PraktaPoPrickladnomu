@@ -30,19 +30,13 @@ namespace треееш
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            currentIndex++;
-            if (currentIndex >= mytov.Count)
-            {
-                currentIndex = 0;
-            }
+            int direction = 1; // Направление прокрутки: 1 - влево, -1 - вправо
+            currentIndex = (currentIndex + direction + mytov.Count) % mytov.Count;
             UpdateCarousel();
         }
 
         private void Form9_Load(object sender, EventArgs e)
         {
-            LoadCarousel();
-            timer1.Enabled = true;
-
             mytov.Add(new Tovar { Art = "артикул2", Foto = "котик.jpg", Name = "Игрушка котенка", Price = 100, Quantity = 10 });
             mytov.Add(new Tovar { Art = "артикул2", Foto = "мишка.jpg", Name = "Игрушка медведь", Price = 200, Quantity = 5 });
             mytov.Add(new Tovar { Art = "артикул2", Foto = "ферби.jpg", Name = "Игрушка ферби", Price = 300, Quantity = 8 });
@@ -53,6 +47,7 @@ namespace треееш
 
             textBox2.Text = ""; // Очистить textbox2 при загрузке формы
             numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
+            trackBar1.Scroll += trackBar1_Scroll; // Добавление обработчика события Scroll к trackBar1
         }
 
         public class Tovar
@@ -62,6 +57,7 @@ namespace треееш
             public string Name { get; set; }
             public decimal Price { get; set; }
             public int Quantity { get; set; }
+
         }
 
         private void LoadCarousel()
@@ -116,7 +112,7 @@ namespace треееш
         {
             for (int i = 0; i < pictureBoxes.Length; i++)
             {
-                int index = (currentIndex + i) % mytov.Count;
+                int index = (currentIndex - i + mytov.Count) % mytov.Count;
                 string imageName = mytov[index].Foto;
                 string fullPath = Path.Combine(imagesFolderPath, imageName);
 
@@ -190,5 +186,50 @@ namespace треееш
             this.Close();
             form5.Show();
         }
+        private int timerInterval = 1000;
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            int speed = trackBar1.Value; // Получение значения скорости из трекбара
+
+            if (speed > 0)
+            {
+                timer1.Interval = 1000 / speed;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            Form10 form10 = new Form10();
+            this.Close();
+            form10.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int selectedIndex = currentIndex;
+
+            if (selectedIndex >= 0 && selectedIndex < mytov.Count)
+            {
+                Tovar selectedTovar = mytov[selectedIndex];
+                decimal selectedQuantity = numericUpDown1.Value; // Получите выбранное значение количества
+
+                // Создайте экземпляр формы 10 и передайте выбранный товар, путь к изображениям и выбранное количество в качестве параметров
+                Form10 form10 = new Form10(selectedTovar, imagesFolderPath, selectedQuantity);
+                form10.Show();
+            }
+        }
     }
 }
+
+
