@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,34 +15,47 @@ namespace треееш
 {
     public partial class Form9 : Form
     {
-        static List<Tovar> mytov = new List<Tovar>();
+        
+        List<Tovar> tovarCollection = Form6.tovarCollection;
         PictureBox[] pictureBoxes;
         Label[] labels;
-        string[] artic = new string[6];
+        int[] artic = new int[6];
         int currentIndex = 0;
-        private string imagesFolderPath = @"C:\Users\Anastasia\Desktop\Работа";
+        private string imagesFolderPath = @"C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\bin\Photo";
+        Form10 form10;
 
         public Form9()
         {
             InitializeComponent();
+
+
+
             pictureBoxes = new PictureBox[] { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6 };
             labels = new Label[] { label1, label2, label3, label4, label5, label6 };
+
+            // Загрузка данных о товарах из файла
+            if (File.Exists("tovar.dat"))
+            {
+                using (FileStream fs = new FileStream("tovar.dat", FileMode.OpenOrCreate))
+                {
+                    BinaryFormatter serializer = new BinaryFormatter();
+                    tovarCollection = (List<Tovar>)serializer.Deserialize(fs);
+                }
+            }
+            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            
             int direction = 1; // Направление прокрутки: 1 - влево, -1 - вправо
-            currentIndex = (currentIndex + direction + mytov.Count) % mytov.Count;
+            currentIndex = (currentIndex + direction + tovarCollection.Count) % tovarCollection.Count;
             UpdateCarousel();
+            
         }
 
         private void Form9_Load(object sender, EventArgs e)
         {
-            mytov.Add(new Tovar { Art = "артикул2", Foto = "котик.jpg", Name = "Игрушка котенка", Price = 100, Quantity = 10 });
-            mytov.Add(new Tovar { Art = "артикул2", Foto = "мишка.jpg", Name = "Игрушка медведь", Price = 200, Quantity = 5 });
-            mytov.Add(new Tovar { Art = "артикул2", Foto = "ферби.jpg", Name = "Игрушка ферби", Price = 300, Quantity = 8 });
-            mytov.Add(new Tovar { Art = "артикул2", Foto = "пони.jpg", Name = "Игрушка поняшка", Price = 400, Quantity = 12 });
-            mytov.Add(new Tovar { Art = "артикул2", Foto = "панда.jpg", Name = "Игрушка панда", Price = 500, Quantity = 3 });
             LoadCarousel();
             timer1.Enabled = true;
 
@@ -50,34 +64,26 @@ namespace треееш
             trackBar1.Scroll += trackBar1_Scroll; // Добавление обработчика события Scroll к trackBar1
         }
 
-        public class Tovar
-        {
-            public string Art { get; set; }
-            public string Foto { get; set; }
-            public string Name { get; set; }
-            public decimal Price { get; set; }
-            public int Quantity { get; set; }
 
-        }
-
-        private void LoadCarousel()
+        public void LoadCarousel()
         {
-            string defaultImageName = "сашка.jpg";
+            string defaultImageName = "pumba.jpg";
 
             for (int i = 0; i < pictureBoxes.Length; i++)
             {
-                if (i < mytov.Count)
+                if (i < tovarCollection.Count)
                 {
-                    string imageName = mytov[i].Foto;
-                    string imagePath = Path.Combine(imagesFolderPath, imageName);
+                    Tovar tovar = tovarCollection[i];
 
-                    if (File.Exists(imagePath))
+                    Image imageName = tovar.ImageFileName;
+                    
+                    if (imageName != null)
                     {
-                        pictureBoxes[i].Image = Image.FromFile(imagePath);
+                        pictureBoxes[i].Image = imageName;
                         pictureBoxes[i].SizeMode = PictureBoxSizeMode.Zoom;
 
-                        labels[i].Text = mytov[i].Name;
-                        artic[i] = mytov[i].Art;
+                        labels[i].Text = tovar.Name;
+                        artic[i] = tovar.Article;
 
                         // Привязка обработчика события Click к каждому PictureBox'у
                         pictureBoxes[i].Click += selectedPictureBox_Click;
@@ -95,63 +101,73 @@ namespace треееш
                             MessageBox.Show("Файл изображения по умолчанию не найден: " + defaultImagePath);
                         }
 
-                        labels[i].Text = mytov[i].Name;
-                        artic[i] = mytov[i].Art;
+                        labels[i].Text = tovar.Name;
+                        artic[i] = tovar.Article;
                     }
                 }
                 else
                 {
                     pictureBoxes[i].Image = null;
                     labels[i].Text = "";
-                    artic[i] = "";
+                    artic[i] = 0;
                 }
             }
         }
 
         private void UpdateCarousel()
         {
+            
             for (int i = 0; i < pictureBoxes.Length; i++)
             {
-                int index = (currentIndex - i + mytov.Count) % mytov.Count;
-                string imageName = mytov[index].Foto;
-                string fullPath = Path.Combine(imagesFolderPath, imageName);
+                int index = (currentIndex - i + tovarCollection.Count) % tovarCollection.Count;
 
-                if (File.Exists(fullPath))
+                //int index = (currentIndex + i) % tovarCollection.Count;
+                Tovar tovar = tovarCollection[index];
+                
+                if (tovar.ImageFileName != null)
                 {
-                    pictureBoxes[i].Image = Image.FromFile(fullPath);
+                    pictureBoxes[i].Image = tovar.ImageFileName;
                     pictureBoxes[i].SizeMode = PictureBoxSizeMode.Zoom;
 
-                    labels[i].Text = mytov[index].Name;
-                    artic[i] = mytov[index].Art;
+                    labels[i].Text = tovar.Name;
+                    artic[i] = tovar.Article;
+
+                    pictureBoxes[i].Click += selectedPictureBox_Click;
                 }
                 else
                 {
-                    MessageBox.Show("Файл изображения не найден: " + fullPath);
+                    MessageBox.Show("Файл изображения не найден: " + tovar.ImageFileName);
                 }
             }
         }
 
+        private Tovar selectedTovar; // Переменная для хранения выбранного товара
+
+        public int selectedIndex;
+
         private void selectedPictureBox_Click(object sender, EventArgs e)
         {
+
             // Получите индекс выбранной картинки из карусели
-            int selectedIndex = Array.IndexOf(pictureBoxes, sender as PictureBox);
+            selectedIndex = Array.IndexOf(pictureBoxes, sender as PictureBox);
 
             // Проверьте, что индекс находится в пределах допустимого диапазона
-            if (selectedIndex >= 0 && selectedIndex < mytov.Count)
+            if (selectedIndex >= 0 && selectedIndex < tovarCollection.Count)
             {
                 // Получите данные выбранного товара
-                Tovar selectedTovar = mytov[selectedIndex];
+                selectedTovar = tovarCollection[selectedIndex];
+
 
                 // Отобразите выбранное изображение в элементе selectedPictureBox
-                string selectedImagePath = Path.Combine(imagesFolderPath, selectedTovar.Foto);
-                if (File.Exists(selectedImagePath))
+
+                if (selectedTovar.ImageFileName != null)
                 {
-                    selectedPictureBox.Image = Image.FromFile(selectedImagePath);
+                    selectedPictureBox.Image = selectedTovar.ImageFileName;
                     selectedPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 else
                 {
-                    MessageBox.Show("Файл выбранного изображения не найден: " + selectedImagePath);
+                    MessageBox.Show("Файл выбранного изображения не найден: " + selectedTovar.ImageFileName);
                 }
 
                 // Отобразите название выбранного товара в элементе selectedLabel
@@ -161,10 +177,7 @@ namespace треееш
             }
         }
 
-        private void selectedLabel_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void selectedLabel_Click(object sender, EventArgs e){}
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
@@ -175,10 +188,7 @@ namespace треееш
             }
         }
 
-        private void pictureBox5_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void pictureBox5_Click(object sender, EventArgs e){}
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -187,15 +197,7 @@ namespace треееш
             form5.Show();
         }
         private int timerInterval = 1000;
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
@@ -207,29 +209,33 @@ namespace треееш
             }
         }
 
+      
+
         private void button2_Click(object sender, EventArgs e)
         {
-
-            Form10 form10 = new Form10();
-            this.Close();
+            
+            form10 = new Form10();
+            this.Hide();
             form10.Show();
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int selectedIndex = currentIndex;
+            //int selectedIndex = currentIndex;
 
-            if (selectedIndex >= 0 && selectedIndex < mytov.Count)
+            if (selectedIndex >= 0 && selectedIndex < tovarCollection.Count)
             {
-                Tovar selectedTovar = mytov[selectedIndex];
+                Tovar selectedTovar = tovarCollection[selectedIndex];
                 decimal selectedQuantity = numericUpDown1.Value; // Получите выбранное значение количества
 
                 // Создайте экземпляр формы 10 и передайте выбранный товар, путь к изображениям и выбранное количество в качестве параметров
-                Form10 form10 = new Form10(selectedTovar, imagesFolderPath, selectedQuantity);
+                form10 = new Form10(selectedTovar, imagesFolderPath, selectedQuantity);
+                MessageBox.Show("Товар добавлен в корзину");
+                this.Hide();
                 form10.Show();
             }
+            
         }
     }
 }
-
-
