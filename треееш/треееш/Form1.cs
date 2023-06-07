@@ -53,8 +53,11 @@ namespace треееш
             loadFile.Close();
 
 
-           textBox1.Text = "Ilove1@mail.ru";
-           textBox2.Text = "Ilove1YOU!";
+            textBox1.Text = "Ilove1@mail.ru";
+            textBox2.Text = "Ilove1YOU!";
+
+            //textBox1.Text = "Paxomov.2004@list.ru";
+            //textBox2.Text = "Mne18letiun!";
 
         }
 

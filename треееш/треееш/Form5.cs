@@ -179,9 +179,16 @@ namespace треееш
 
         private void button4_Click(object sender, EventArgs e)
         {
+
+            Form11 form11 = new Form11();
+            this.Hide();
+            form11.Show();
+
+            /*
             Form9 form9 = new Form9();
             this.Close();
             form9.Show();
+            */
         }
     }
 }

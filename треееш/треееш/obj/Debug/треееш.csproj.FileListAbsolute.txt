@@ -99,3 +99,7 @@ C:\Users\user\Desktop\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\�
 C:\Users\user\Desktop\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.csproj.CoreCompileInputs.cache
 C:\Users\user\Desktop\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.exe
 C:\Users\user\Desktop\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.pdb
+C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form11.resources
+C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form12.resources
+C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form13.resources
+C:\Users\user\Desktop\Prakta_Po_Prikladnomu-49-55\PraktaPoPrickladnomu\треееш\треееш\obj\Debug\треееш.Form14.resources

@@ -56,6 +56,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label11 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -329,11 +330,22 @@
             this.label11.TabIndex = 25;
             this.label11.Text = "Скорость прокрутки:";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(775, 561);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(138, 60);
+            this.button4.TabIndex = 26;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Form9
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1345, 749);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.button3);
@@ -408,5 +420,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button4;
     }
 }
