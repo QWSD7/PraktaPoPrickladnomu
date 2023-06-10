@@ -20,20 +20,15 @@ namespace треееш
         private int carouselOffset;
         private int carouselItemWidth;
 
-        private const int ScrollStep = 1;
-        private const int TimerInterval = 20;
+        private const int TimerInterval = 10;
 
-        private int schet = 0;
-
-        private int currentIndex = 0; // Текущий индекс добавляемого элемента
-        private int totalItemsCount = 0; // Общее количество элементов в карусели
-
+        private int animationStep = 0;
+        private int animationDuration = 20; // Длительность анимации в миллисекундах
 
         public Form11()
         {
             InitializeComponent();
 
-            //flowLayoutPanel1.Dock = DockStyle.Top;
             flowLayoutPanel1.Height = 200;
             flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.WrapContents = false;
@@ -47,7 +42,7 @@ namespace треееш
             carouselOffset = 0;
             carouselItemWidth = 150;
             timer1.Start();
-
+            
             trackBar1.Minimum = 1;
             trackBar1.Maximum = 10;
             trackBar1.Value = 2;
@@ -62,7 +57,6 @@ namespace треееш
             timer1.Interval = TimerInterval / speed;
         }
 
-
         private void CarouselTimer_Tick(object sender, EventArgs e)
         {
             // Проверяем, если есть элементы в карусели
@@ -74,22 +68,18 @@ namespace треееш
                 int scrollStep = trackBar1.Value; // Шаг прокрутки (значение получено с помощью trackBar)
 
                 // Проверяем, если прокрутка достигла конца
-                if (scrollPosition + flowLayoutPanel1.Width >= maxScrollPosition)
+                if (scrollPosition +flowLayoutPanel1.Width >= maxScrollPosition)
                 {
-                    // Перемещаем элементы из начала списка в конец
-                    for (int i = 0; i < scrollStep; i++)
+                    if (flowLayoutPanel1.Controls.Count > 0)
                     {
-                        if (flowLayoutPanel1.Controls.Count > 0)
-                        {
-                            // Получаем первый элемент
-                            Control firstItem = flowLayoutPanel1.Controls[0];
+                        // Получаем первый элемент
+                        Control firstItem = flowLayoutPanel1.Controls[0];
 
-                            // Удаляем первый элемент из начала списка
-                            flowLayoutPanel1.Controls.RemoveAt(0);
+                        // Удаляем первый элемент из начала списка
+                        flowLayoutPanel1.Controls.RemoveAt(0);
 
-                            // Добавляем первый элемент в конец списка
-                            flowLayoutPanel1.Controls.Add(firstItem);
-                        }
+                        // Добавляем первый элемент в конец списка
+                        flowLayoutPanel1.Controls.Add(firstItem);
                     }
 
                     // Устанавливаем прокрутку в начало
@@ -97,21 +87,31 @@ namespace треееш
                 }
                 else
                 {
-                    // Прокручиваем панель на шаг прокрутки
-                    flowLayoutPanel1.HorizontalScroll.Value += scrollStep;
+
+                    // Плавно изменяем прокрутку на каждом шаге таймера
+                    if (animationStep < animationDuration)
+                    {
+                        // Вычисляем новое значение прокрутки с учетом анимации
+                        int newScrollPosition = scrollPosition + (scrollStep * animationStep / animationDuration);
+
+                        // Устанавливаем новое значение прокрутки
+                        flowLayoutPanel1.HorizontalScroll.Value = newScrollPosition;
+
+                        // Увеличиваем счетчик шагов анимации
+                        animationStep++;
+                    }
+                    else
+                    {
+                        // Прокручиваем панель на шаг прокрутки
+                        flowLayoutPanel1.HorizontalScroll.Value += scrollStep;
+                    }
                 }
             }
-
-
-
-
         }
+        
 
         private void LoadTovarData()
         {
-
-            // Чтение данных о товарах из файла или из другого источника данных
-
             if (File.Exists("tovar.dat"))
             {
                 using (FileStream fs = new FileStream("tovar.dat", FileMode.Open))
@@ -137,8 +137,6 @@ namespace треееш
             {
                 tovarCollection = new List<Tovar>();
             }
-
-           
         }
 
         
@@ -160,9 +158,6 @@ namespace треееш
 
             // Добавление PictureBox в панель карусели
             flowLayoutPanel1.Controls.Add(pictureBox);
-
-            schet++;
-            
         }
 
 
@@ -199,7 +194,6 @@ namespace треееш
 
         private void button2_Click(object sender, EventArgs e)
         {
-
             Form5 form5 = new Form5();
             this.Hide();
             form5.Show();

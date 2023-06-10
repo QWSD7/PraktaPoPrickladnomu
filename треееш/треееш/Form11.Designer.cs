@@ -52,10 +52,12 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 54);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(741, 200);
             this.flowLayoutPanel1.TabIndex = 5;
+            this.flowLayoutPanel1.WrapContents = false;
             // 
             // timer1
             // 
@@ -76,8 +78,9 @@
             // 
             // trackBar1
             // 
+            this.trackBar1.LargeChange = 1;
             this.trackBar1.Location = new System.Drawing.Point(191, 260);
-            this.trackBar1.Maximum = 50;
+            this.trackBar1.Maximum = 20;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(562, 45);
             this.trackBar1.TabIndex = 7;
@@ -115,6 +118,7 @@
             this.Font = new System.Drawing.Font("Liberation Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Form11";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form11";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
